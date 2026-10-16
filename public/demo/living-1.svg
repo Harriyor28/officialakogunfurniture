@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Living room">
+  <defs>
+    <linearGradient id="bg" gradientTransform="rotate(53)">
+      <stop offset="0%" stop-color="#3D2C21"/>
+      <stop offset="55%" stop-color="#0B0B0D"/>
+      <stop offset="100%" stop-color="#0B0B0D"/>
+    </linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3D2C21"/>
+      <stop offset="100%" stop-color="#0B0B0D"/>
+    </linearGradient>
+    <linearGradient id="wood-light" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C6A66B" stop-opacity=".8"/>
+      <stop offset="100%" stop-color="#3D2C21"/>
+    </linearGradient>
+    <linearGradient id="wood-dark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B0B0D"/>
+      <stop offset="100%" stop-color="#0b0b0d"/>
+    </linearGradient>
+    <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#33271f"/><stop offset="1" stop-color="#171719"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#241b15"/><stop offset="1" stop-color="#0b0b0d"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="16"/><feOffset dy="16"/><feComponentTransfer><feFuncA type="linear" slope=".35"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <path d="M0 0h1200v628L0 700z" fill="url(#wall)" opacity=".72"/>
+  <path d="M0 700 1200 628v272H0z" fill="url(#floor)"/>
+  <path d="M0 700 1200 628" stroke="#C6A66B" stroke-opacity=".22" stroke-width="3"/>
+  <path d="M80 900 440 675m220 225L650 665m470 235L820 653" stroke="#d7bd92" stroke-opacity=".08" stroke-width="2"/>
+  <path d="M140 120h920" stroke="#C6A66B" stroke-opacity=".2" stroke-width="2"/>
+  <g filter="url(#shadow)"><ellipse cx="600" cy="748" rx="430" ry="38" fill="#080808" opacity=".42"/>
+      <path d="M270 480 345 420h490l93 62-35 188-590-6z" fill="#74563f"/><path d="M270 480l75-60v199l-76 52z" fill="#513924"/>
+      <path d="M363 455h210v142H363z" fill="#aa8665"/><path d="M581 455h225v142H581z" fill="#967354"/>
+      <path d="M357 605h490l-22 100H385z" fill="#593e2c"/><path d="M385 704v32m436-32v32" stroke="#23160e" stroke-width="16"/>
+      <path d="M382 467l35-65h125l28 65z" fill="#d4c1a7"/><path d="M601 467l28-65h137l32 65z" fill="#d8c5aa"/>
+      <path d="M465 645 505 555h210l55 90-26 18H481z" fill="#c6a66b"/><path d="M505 555l44-32h210l-44 32z" fill="#e4d0ac"/>
+      <path d="M555 663v53m170-53v53" stroke="#2c1c11" stroke-width="13"/><path d="M220 393h760" stroke="#C6A66B" stroke-opacity=".26" stroke-width="4"/>
+      <path d="M940 365h35v142h-35z" fill="#2e2015"/><path d="M916 365h82l-17-54h-48z" fill="#C6A66B" opacity=".7"/></g>
+  <path d="M0 0h1200v900H0z" fill="url(#bg)" opacity=".1"/>
+  <text x="72" y="818" font-family="Georgia, 'Times New Roman', serif" font-size="42" fill="#C6A66B" opacity=".95">Living room</text>
+  <text x="74" y="858" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#E5DED1" opacity=".7">CONCEPT RENDER / AKOGUN FURNITURE</text>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Office furniture">
+  <defs>
+    <linearGradient id="bg" gradientTransform="rotate(60)">
+      <stop offset="0%" stop-color="#55402C"/>
+      <stop offset="55%" stop-color="#141416"/>
+      <stop offset="100%" stop-color="#0B0B0D"/>
+    </linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#55402C"/>
+      <stop offset="100%" stop-color="#141416"/>
+    </linearGradient>
+    <linearGradient id="wood-light" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#A5A5AA" stop-opacity=".8"/>
+      <stop offset="100%" stop-color="#55402C"/>
+    </linearGradient>
+    <linearGradient id="wood-dark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#141416"/>
+      <stop offset="100%" stop-color="#0b0b0d"/>
+    </linearGradient>
+    <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#33271f"/><stop offset="1" stop-color="#171719"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#241b15"/><stop offset="1" stop-color="#0b0b0d"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="16"/><feOffset dy="16"/><feComponentTransfer><feFuncA type="linear" slope=".35"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <path d="M0 0h1200v628L0 700z" fill="url(#wall)" opacity=".72"/>
+  <path d="M0 700 1200 628v272H0z" fill="url(#floor)"/>
+  <path d="M0 700 1200 628" stroke="#A5A5AA" stroke-opacity=".22" stroke-width="3"/>
+  <path d="M80 900 440 675m220 225L650 665m470 235L820 653" stroke="#d7bd92" stroke-opacity=".08" stroke-width="2"/>
+  <path d="M140 120h920" stroke="#A5A5AA" stroke-opacity=".2" stroke-width="2"/>
+  <g filter="url(#shadow)"><ellipse cx="620" cy="754" rx="360" ry="31" fill="#070707" opacity=".45"/>
+      <path d="M315 405h565l85 49H400z" fill="#c09b6c"/><path d="M400 454h565v42H400z" fill="url(#wood)"/><path d="M400 496h565v176H400z" fill="#3f2c1d"/>
+      <path d="M420 512h245v142H420zm270 0h255v142H690z" fill="#4f3724" stroke="#A5A5AA" stroke-opacity=".33" stroke-width="2"/>
+      <path d="M545 518v132m270-132v132" stroke="#A5A5AA" stroke-opacity=".35" stroke-width="3"/><path d="M430 672v64m502-64v64" stroke="#1a110b" stroke-width="20"/>
+      <path d="M500 399V225h280v172z" fill="#24282a" stroke="#A5A5AA" stroke-opacity=".4" stroke-width="3"/><path d="M520 245h240v132H520z" fill="#31464b"/>
+      <path d="M640 397v32m-58 0h116" stroke="#aaa08f" stroke-width="10"/><path d="M355 580h-75v95h75" fill="#493221"/>
+      <path d="M310 675v40m-44-40h88" stroke="#1c1712" stroke-width="13"/></g>
+  <path d="M0 0h1200v900H0z" fill="url(#bg)" opacity=".1"/>
+  <text x="72" y="818" font-family="Georgia, 'Times New Roman', serif" font-size="42" fill="#A5A5AA" opacity=".95">Office furniture</text>
+  <text x="74" y="858" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#E5DED1" opacity=".7">CONCEPT RENDER / AKOGUN FURNITURE</text>
+</svg>

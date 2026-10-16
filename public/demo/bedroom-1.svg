@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Bedroom set">
+  <defs>
+    <linearGradient id="bg" gradientTransform="rotate(46)">
+      <stop offset="0%" stop-color="#4A3223"/>
+      <stop offset="55%" stop-color="#171719"/>
+      <stop offset="100%" stop-color="#0B0B0D"/>
+    </linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4A3223"/>
+      <stop offset="100%" stop-color="#171719"/>
+    </linearGradient>
+    <linearGradient id="wood-light" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C6A66B" stop-opacity=".8"/>
+      <stop offset="100%" stop-color="#4A3223"/>
+    </linearGradient>
+    <linearGradient id="wood-dark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#171719"/>
+      <stop offset="100%" stop-color="#0b0b0d"/>
+    </linearGradient>
+    <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#33271f"/><stop offset="1" stop-color="#171719"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#241b15"/><stop offset="1" stop-color="#0b0b0d"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="16"/><feOffset dy="16"/><feComponentTransfer><feFuncA type="linear" slope=".35"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <path d="M0 0h1200v628L0 700z" fill="url(#wall)" opacity=".72"/>
+  <path d="M0 700 1200 628v272H0z" fill="url(#floor)"/>
+  <path d="M0 700 1200 628" stroke="#C6A66B" stroke-opacity=".22" stroke-width="3"/>
+  <path d="M80 900 440 675m220 225L650 665m470 235L820 653" stroke="#d7bd92" stroke-opacity=".08" stroke-width="2"/>
+  <path d="M140 120h920" stroke="#C6A66B" stroke-opacity=".2" stroke-width="2"/>
+  <g filter="url(#shadow)"><ellipse cx="615" cy="754" rx="420" ry="38" fill="#080808" opacity=".45"/>
+      <path d="M250 565 365 485h520l125 82-128 145H368z" fill="#302014"/><path d="M250 565l118 52v176L250 730z" fill="#4a3020"/>
+      <path d="M368 617h514l128-50v163L882 780H368z" fill="url(#wood)"/><path d="M368 617 490 520h400l-8 97z" fill="#e2d5bd"/>
+      <path d="M490 520h400l-8 97H368z" fill="#f0e7d8"/><path d="M515 532h157l-10 65H495zm181 0h160l-7 65H686z" fill="#b8a58b"/>
+      <path d="M250 565l118 52 122-97 125-35 140 37 135 45-8 50H368z" fill="#c7b69e" opacity=".65"/>
+      <path d="M368 780v-36m514 36v-38" stroke="#1a100b" stroke-width="18"/><path d="M305 490V350h180v160" fill="url(#wood)" stroke="#C6A66B" stroke-opacity=".3" stroke-width="2"/>
+      <path d="M326 372h138v93H326z" fill="#382518"/><path d="M520 395h70v8h-70m0 22h70v8h-70m0 22h70v8h-70" fill="#C6A66B" opacity=".5"/>
+      <path d="M800 490v-170h145v206z" fill="#392619"/><path d="M815 335h115v62H815zm0 76h115v76H815z" fill="url(#wood-light)" opacity=".55"/></g>
+  <path d="M0 0h1200v900H0z" fill="url(#bg)" opacity=".1"/>
+  <text x="72" y="818" font-family="Georgia, 'Times New Roman', serif" font-size="42" fill="#C6A66B" opacity=".95">Bedroom set</text>
+  <text x="74" y="858" font-family="Helvetica, Arial, sans-serif" font-size="17" fill="#E5DED1" opacity=".7">CONCEPT RENDER / AKOGUN FURNITURE</text>
+</svg>
