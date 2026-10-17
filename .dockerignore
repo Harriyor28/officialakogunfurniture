@@ -1,0 +1,35 @@
+node_modules
+.next
+out
+build
+coverage
+
+.git
+.gitignore
+.vscode
+.agents
+.vercel
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Local databases
+prisma/*.db
+prisma/*.db-journal
+prisma/*.db-shm
+prisma/*.db-wal
+*.db
+
+# Runtime/private uploads (kept on the persistent volume, not in the image)
+data/uploads
+
+# Logs and build artefacts
+*.log
+*.tsbuildinfo
+next-env.d.ts
+
+# Docs are not needed at runtime
+README.md
+docs

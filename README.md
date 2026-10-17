@@ -75,11 +75,13 @@ See [`.env.example`](.env.example) for the full list with comments.
 
 | Variable | Required | Purpose |
 | -------- | -------- | ------- |
-| `DATABASE_URL` | yes | SQLite path, e.g. `file:./prisma/dev.db` |
+| `DATABASE_URL` | yes | SQLite path, e.g. `file:./prisma/dev.db` (or `file:/data/akogun.db` on a volume) |
 | `SESSION_SECRET` | yes (prod) | 32+ char random string; production refuses to boot without it |
-| `NEXT_PUBLIC_SITE_URL` | yes (prod) | Absolute site URL used in emails, sitemap, robots |
-| `NEXT_PUBLIC_BUSINESS_PHONE` / `_WHATSAPP_NUMBER` / `_BUSINESS_EMAIL` | no | Override contact details stored in admin settings |
+| `SITE_URL` | yes (prod) | Absolute site URL (runtime) used in emails, sitemap, robots, canonical links |
+| `NEXT_PUBLIC_SITE_URL` | no | Build-time fallback for `SITE_URL` (`NEXT_PUBLIC_*` is inlined at build) |
+| `BUSINESS_PHONE` / `BUSINESS_WHATSAPP_NUMBER` / `BUSINESS_EMAIL` | no | Override contact details stored in admin settings |
 | `ADMIN_EMAIL` / `ADMIN_PASSWORD` | no | First-run admin account for the seed script |
+| `DATA_DIR` | no | Container state directory (defaults to `/data`) |
 | `RESEND_API_KEY` / `EMAIL_FROM` | no | When unset, emails are logged as `SKIPPED` and never claimed as sent |
 
 ---
@@ -112,19 +114,70 @@ See [`.env.example`](.env.example) for the full list with comments.
 
 ## Deployment
 
-1. Provision a host with Node 20+ (VPS, Railway, Render, Fly.io, a VM behind Nginx, etc.).
-2. Clone the repo and `npm ci`.
-3. Copy `.env.example` → `.env`, fill every required value (`SESSION_SECRET` must be a long random string; `NEXT_PUBLIC_SITE_URL` must be the public HTTPS URL).
-4. `npx prisma migrate deploy && node prisma/seed.mjs` (the seed is idempotent; skip it if you do not want demo content).
-5. `npm run build && npm start`.
-6. Terminate TLS at your proxy/host. Cookies are already `secure` in production.
-7. Sign in at `/admin`, open **Settings**, and:
-   - fill in the real business contact details;
-   - switch the **demo-content banner** off once real content is in place;
-   - replace demo portfolio/catalogue/blog entries with real work.
+The app needs a long-running **Node** process and a **persistent disk** for the
+SQLite database and uploaded media, so use a Node host (Railway, Render, Fly.io
+or a VPS) — not a serverless/edge platform.
 
-### SQLite on ephemeral hosts
-SQLite stores data in a file. On hosts with ephemeral filesystems (serverless), attach a persistent volume to `prisma/` or move to a client/server database (Postgres) — the Prisma schema is portable; only the datasource provider and `prisma.config.ts` need changing.
+A `Dockerfile`, `docker-compose.yml` and `render.yaml` are included. The image
+keeps all state under `/data`, applies migrations on boot, then serves on port
+`3000`.
+
+### Docker (local or VPS)
+
+```bash
+cp .env.example .env         # set SESSION_SECRET and SITE_URL
+docker compose up --build -d
+docker compose exec web node prisma/seed.mjs   # first run only: demo content + admin
+```
+
+The `akogun-data` volume holds the database, public uploads and private enquiry
+attachments, so it survives rebuilds.
+
+### Railway
+
+1. **New project → Deploy from GitHub repo** (Railway detects the `Dockerfile`).
+2. Add a **Volume** mounted at `/data`.
+3. Add variables: `DATABASE_URL=file:/data/akogun.db`, `SESSION_SECRET`,
+   `SITE_URL`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, and optionally
+   `RESEND_API_KEY` / `EMAIL_FROM`.
+4. Deploy — migrations run automatically on boot. Run the seed once from the
+   service shell: `node prisma/seed.mjs`.
+
+### Render
+
+Commit the included `render.yaml`, choose **New → Blueprint**, and fill the
+values marked `sync: false`. Persistent disks require the Starter plan or
+higher.
+
+### Fly.io
+
+```bash
+fly launch --no-deploy        # keep the Dockerfile-based config
+fly volumes create akogun_data --size 1
+```
+
+Add `[mounts]\n  source = "akogun_data"\n  destination = "/data"` to `fly.toml`,
+set the variables with `fly secrets set`, then `fly deploy`.
+
+### Runtime variables (summary)
+
+| Variable | Value |
+| -------- | ----- |
+| `DATABASE_URL` | `file:/data/akogun.db` (must be on the persistent volume) |
+| `SESSION_SECRET` | 32+ char random string (production will not boot without it) |
+| `SITE_URL` | Public HTTPS URL (read at runtime) |
+| `ADMIN_EMAIL` / `ADMIN_PASSWORD` | First-run admin account for the seed |
+
+Terminate TLS at the host/proxy; cookies are already `secure` in production.
+After the first deploy, sign in at `/admin` → **Settings** to enter the real
+business details, turn off the **demo-content banner** and replace demo content.
+
+### Ephemeral / serverless hosts
+SQLite stores data in a file, so it cannot run on stateless serverless or edge
+runtimes (e.g. Cloudflare Pages/Workers). If you must use one, move to a
+client/server database such as Postgres — the Prisma schema is portable; only
+the datasource provider, the driver adapter in `lib/prisma.ts` and
+`prisma.config.ts` need changing.
 
 ---
 

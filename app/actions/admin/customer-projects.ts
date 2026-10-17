@@ -10,6 +10,7 @@ import { CUSTOMER_PROJECT_STAGES, stagePercent } from "@/lib/constants";
 import { audit } from "@/lib/audit";
 import { sendEmail } from "@/lib/email";
 import { getBusinessSettings } from "@/lib/settings";
+import { getSiteUrl } from "@/lib/site-url";
 import type { AdminFormState } from "@/app/actions/admin/projects";
 export type { AdminFormState };
 
@@ -76,7 +77,7 @@ export async function convertQuotationAction(_prev: AdminFormState, formData: Fo
   await sendEmail({
     to: customer.email,
     subject: `Your project ${reference} has started`,
-    text: `Hello ${customer.name},\n\nGreat news — project "${title}" (${reference}) has been created from quotation ${quotation.reference}.\n\nSign in at ${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/portal to follow progress.\n\nKind regards,\n${settings.businessName}`,
+    text: `Hello ${customer.name},\n\nGreat news — project "${title}" (${reference}) has been created from quotation ${quotation.reference}.\n\nSign in at ${getSiteUrl()}/portal to follow progress.\n\nKind regards,\n${settings.businessName}`,
     relatedType: "CustomerProject",
     relatedId: project.id,
   });
@@ -178,7 +179,7 @@ export async function addProjectUpdateAction(_prev: AdminFormState, formData: Fo
     await sendEmail({
       to: project.customer.email,
       subject: `Project update — ${project.reference}`,
-      text: `Hello ${project.customer.name},\n\nThere is a new update on project ${project.reference}:\n\n${data.title}\n${data.description}\n\nSign in to view full details: ${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/portal/projects/${project.reference}\n\nKind regards,\n${settings.businessName}`,
+      text: `Hello ${project.customer.name},\n\nThere is a new update on project ${project.reference}:\n\n${data.title}\n${data.description}\n\nSign in to view full details: ${getSiteUrl()}/portal/projects/${project.reference}\n\nKind regards,\n${settings.businessName}`,
       relatedType: "CustomerProject",
       relatedId: project.id,
     });

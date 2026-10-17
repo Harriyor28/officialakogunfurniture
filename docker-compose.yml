@@ -1,0 +1,37 @@
+# Production-style run on a single host (VPS, or local verification).
+#
+#   1. copy .env.example .env   and set SESSION_SECRET / SITE_URL
+#   2. docker compose up --build -d
+#   3. docker compose exec web node prisma/seed.mjs   # first run only
+#
+# The named volume `akogun-data` holds the SQLite database and all uploaded
+# media, so it survives `docker compose down` and image rebuilds.
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+    image: akogun-furniture
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: file:/data/akogun.db
+      DATA_DIR: /data
+      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET must be set (see .env.example)}
+      SITE_URL: ${SITE_URL:-http://localhost:3000}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      BUSINESS_PHONE: ${BUSINESS_PHONE:-}
+      BUSINESS_WHATSAPP_NUMBER: ${BUSINESS_WHATSAPP_NUMBER:-}
+      BUSINESS_EMAIL: ${BUSINESS_EMAIL:-}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@akogunfurniture.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      EMAIL_FROM: ${EMAIL_FROM:-}
+    volumes:
+      - akogun-data:/data
+
+volumes:
+  akogun-data:

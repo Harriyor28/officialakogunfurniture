@@ -10,6 +10,7 @@ import { savePrivateAttachment } from "@/lib/upload";
 import { notifyAdmins, sendEmail } from "@/lib/email";
 import { getBusinessSettings } from "@/lib/settings";
 import { audit } from "@/lib/audit";
+import { getSiteUrl } from "@/lib/site-url";
 
 export type EnquiryState = {
   error?: string;
@@ -80,7 +81,7 @@ export async function submitEnquiryAction(_prev: EnquiryState, formData: FormDat
   });
 
   const settings = await getBusinessSettings();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const siteUrl = getSiteUrl();
 
   await sendEmail({
     to: enquiry.email,

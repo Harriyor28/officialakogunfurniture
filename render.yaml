@@ -1,0 +1,38 @@
+# Render blueprint — deploy the Dockerfile with a persistent disk.
+#
+#   New + → Blueprint → connect this repo, then set the values marked
+#   `sync: false` (SESSION_SECRET is generated automatically).
+#
+# Note: persistent disks require a paid instance type (Starter or higher).
+
+services:
+  - type: web
+    name: akogun-furniture
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        value: file:/data/akogun.db
+      - key: DATA_DIR
+        value: /data
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: SITE_URL
+        sync: false # e.g. https://akogun-furniture.onrender.com
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false # same value as SITE_URL (build-time fallback)
+      - key: ADMIN_EMAIL
+        value: admin@akogunfurniture.local
+      - key: ADMIN_PASSWORD
+        sync: false # strong password for the first admin account
+      - key: RESEND_API_KEY
+        sync: false # optional
+      - key: EMAIL_FROM
+        sync: false # optional
+    disk:
+      name: akogun-data
+      mountPath: /data
+      sizeGB: 1

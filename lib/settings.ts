@@ -54,9 +54,10 @@ export async function getBusinessSettings(): Promise<SettingsInput> {
   // configured without database access during initial setup.
   return {
     ...merged,
-    phone: process.env.NEXT_PUBLIC_BUSINESS_PHONE || merged.phone,
-    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || merged.whatsapp,
-    email: process.env.NEXT_PUBLIC_BUSINESS_EMAIL || merged.email,
+    phone: process.env.BUSINESS_PHONE || process.env.NEXT_PUBLIC_BUSINESS_PHONE || merged.phone,
+    whatsapp:
+      process.env.BUSINESS_WHATSAPP_NUMBER || process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || merged.whatsapp,
+    email: process.env.BUSINESS_EMAIL || process.env.NEXT_PUBLIC_BUSINESS_EMAIL || merged.email,
   };
 }
 

@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { hashPassword, passwordIssues, verifyPassword } from "@/lib/password";
 import { createSession, destroySession } from "@/lib/session";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { getSiteUrl } from "@/lib/site-url";
 import {
   loginSchema,
   passwordResetRequestSchema,
@@ -127,7 +128,7 @@ export async function requestPasswordResetAction(_prev: AuthState, formData: For
     },
   });
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const baseUrl = getSiteUrl();
   const status = await sendEmail({
     to: user.email,
     subject: "Reset your Official Akogun Furniture password",
