@@ -10,14 +10,29 @@ function createClient(): PrismaClient {
     return new PrismaClient({ adapter });
   }
   // PostgreSQL (and other server databases) require the matching driver
-  // adapter, e.g. @prisma/adapter-pg — see README → Production database.
+  // adapter, e.g. @prisma/adapter-pg — see README → Deployment.
+  const scheme = url.includes("://") ? url.split("://")[0] : "unknown";
   throw new Error(
-    "No driver adapter configured for DATABASE_URL. See README.md → Production database.",
+    `Unsupported DATABASE_URL (scheme "${scheme}"). This build uses the SQLite driver: ` +
+      'set DATABASE_URL to a "file:" path. To use PostgreSQL, change the Prisma provider, ' +
+      "regenerate the client and add the matching adapter — see README.md → Deployment.",
   );
 }
 
-export const prisma = globalForPrisma.prisma ?? createClient();
-
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+function getClient(): PrismaClient {
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = createClient();
+  }
+  return globalForPrisma.prisma;
 }
+
+// The client is created lazily so importing this module never throws. The
+// configuration error therefore surfaces on the first query (runtime) instead
+// of during the build's page-data collection, where no database is needed.
+export const prisma = new Proxy({} as PrismaClient, {
+  get(_target, property) {
+    const client = getClient();
+    const value = Reflect.get(client as object, property);
+    return typeof value === "function" ? value.bind(client) : value;
+  },
+}) as PrismaClient;
