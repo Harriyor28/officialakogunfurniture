@@ -6,10 +6,10 @@
  * variable without rebuilding. `NEXT_PUBLIC_SITE_URL` is kept as a fallback
  * (NEXT_PUBLIC_* values are inlined into the bundle at build time).
  */
+const FALLBACK = "http://localhost:3000";
+
 export function getSiteUrl(): string {
-  const raw =
-    process.env.SITE_URL ??
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    "http://localhost:3000";
-  return raw.replace(/\/+$/, "");
+  // Use `||` (not `??`) so empty/blank values fall through to the next source.
+  const raw = (process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || FALLBACK).trim();
+  return (raw || FALLBACK).replace(/\/+$/, "");
 }

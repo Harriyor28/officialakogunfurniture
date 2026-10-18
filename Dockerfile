@@ -34,7 +34,7 @@ COPY . .
 # Optional: NEXT_PUBLIC_* values are inlined at build time. The server-side
 # code prefers the runtime SITE_URL variable, so this is only a fallback.
 ARG NEXT_PUBLIC_SITE_URL
-ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
 RUN npx prisma generate && npm run build
 
 # --- Runtime image (no build toolchain) -------------------------------------
