@@ -1,4 +1,4 @@
-"use server";
+﻿"use server";
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
@@ -23,11 +23,15 @@ export async function saveServicesAction(_prev: AdminFormState, formData: FormDa
   const entries = ids.flatMap((id, index) => {
     const name = String(formData.get(`serviceName_${index}`) ?? "").trim();
     const description = String(formData.get(`serviceDescription_${index}`) ?? "").trim();
+    const image = formData.has(`serviceImage_${index}`)
+      ? String(formData.get(`serviceImage_${index}`) ?? "").trim()
+      : undefined;
     if (!id && !name && !description) return [];
     return [{
       id,
       name,
       description,
+      image,
       slug: slugify(String(formData.get(`serviceSlug_${index}`) ?? "").trim() || name),
       order: Number(formData.get(`serviceOrder_${index}`)),
       published: formData.getAll(`servicePublished_${index}`).includes("on"),
@@ -72,6 +76,7 @@ export async function saveServicesAction(_prev: AdminFormState, formData: FormDa
           name: service.name,
           slug: service.slug,
           description: service.description,
+          ...(service.image !== undefined ? { image: service.image || null } : {}),
           order: service.order,
           published: service.published,
         };
@@ -285,3 +290,4 @@ export async function deleteBlogPostAction(formData: FormData): Promise<void> {
   revalidatePath("/blog");
   revalidatePath("/admin/blog");
 }
+
