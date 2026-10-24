@@ -6,12 +6,14 @@ import { saveServicesAction, type AdminFormState } from "@/app/actions/admin/con
 import { Field, TextArea, TextInput, Checkbox } from "@/components/ui/Form";
 import { SubmitButton } from "@/components/ui/Button";
 import { FormAlert } from "@/components/admin/FormAlert";
+import { SingleImage } from "@/components/admin/ImageGallery";
 
 type ServiceEntry = {
   id: string;
   name: string;
   slug: string;
   description: string;
+  image: string;
   order: number;
   published: boolean;
 };
@@ -19,14 +21,18 @@ type ServiceEntry = {
 const initialState: AdminFormState = {};
 
 function emptyService(): ServiceEntry {
-  return { id: "", name: "", slug: "", description: "", order: 0, published: true };
+  return { id: "", name: "", slug: "", description: "", image: "", order: 0, published: true };
 }
 
-export function ServicesForm({ services }: { services: ServiceEntry[] }) {
+export function ServicesForm({
+  services,
+}: {
+  services: Array<Omit<ServiceEntry, "image"> & { image: string | null }>;
+}) {
   const [state, formAction, pending] = useActionState(saveServicesAction, initialState);
   const router = useRouter();
   const [entries, setEntries] = useState<ServiceEntry[]>(() => [
-    ...services.map((service) => ({ ...service })),
+    ...services.map((service) => ({ ...service, image: service.image ?? "" })),
     emptyService(),
   ]);
 
@@ -86,6 +92,11 @@ export function ServicesForm({ services }: { services: ServiceEntry[] }) {
                 required={Boolean(service.id)}
               />
             </Field>
+            <SingleImage
+              initial={service.image}
+              name={`serviceImage_${index}`}
+              label="Service photo"
+            />
             <div className="flex flex-wrap items-end justify-between gap-4">
               <Field label="Display order" htmlFor={`service-order-${index}`} hint="Lower numbers appear first">
                 <TextInput

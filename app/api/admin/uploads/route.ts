@@ -18,11 +18,8 @@ export async function POST(request: NextRequest) {
   }
 
   const saved = await savePublicImage(file);
-  if (!saved) {
-    return NextResponse.json(
-      { error: "Unsupported file type or file too large (max 8MB images: jpg, png, webp, avif, svg; max 40MB videos: mp4, webm)." },
-      { status: 400 },
-    );
+  if ("error" in saved) {
+    return NextResponse.json({ error: saved.error }, { status: 400 });
   }
 
   await audit({ userId: user.id, action: "upload.image", entity: "Upload", entityId: saved.url });

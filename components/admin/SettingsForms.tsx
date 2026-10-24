@@ -27,6 +27,7 @@ type Settings = {
   instagram: string;
   twitter: string;
   aboutBody: string;
+  aboutImage: string;
   footerNote: string;
   contentIsDemo: boolean;
 };
@@ -81,6 +82,7 @@ export function BusinessSettingsForm({ settings }: { settings: Settings }) {
       <Field label="About page body" htmlFor="aboutBody">
         <TextArea id="aboutBody" name="aboutBody" rows={6} defaultValue={settings.aboutBody} />
       </Field>
+      <SingleImage initial={settings.aboutImage} name="aboutImage" label="About page photo" />
       <Field label="Footer note" htmlFor="footerNote">
         <TextInput id="footerNote" name="footerNote" defaultValue={settings.footerNote} />
       </Field>

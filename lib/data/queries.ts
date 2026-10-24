@@ -59,6 +59,26 @@ export const getPublishedPosts = cache(async (limit?: number) =>
   }),
 );
 
+/**
+ * Cover photography from published projects, used as a genuine fallback when a
+ * service or the About page has no photo of its own yet (instead of shipping
+ * placeholder artwork).
+ */
+export const getProjectCoverImages = cache(async (limit = 8) => {
+  const projects = await prisma.project.findMany({
+    where: { published: true, status: { not: "ARCHIVED" } },
+    orderBy: [{ featured: "desc" }, { updatedAt: "desc" }],
+    take: limit,
+    select: {
+      coverImage: true,
+      images: { select: { url: true }, orderBy: { order: "asc" }, take: 1 },
+    },
+  });
+  return projects
+    .map((project) => project.coverImage ?? project.images[0]?.url ?? null)
+    .filter((url): url is string => Boolean(url));
+});
+
 export const getPortfolioStats = cache(async () => {
   const [completed, categories, inProgress] = await Promise.all([
     prisma.project.count({ where: { published: true, status: "COMPLETED" } }),

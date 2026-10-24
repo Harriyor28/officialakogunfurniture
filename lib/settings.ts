@@ -21,6 +21,7 @@ const DEFAULT_BUSINESS: SettingsInput = {
   instagram: "",
   twitter: "",
   aboutBody: "",
+  aboutImage: "",
   footerNote: "",
   contentIsDemo: false,
 };

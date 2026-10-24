@@ -235,6 +235,7 @@ export const settingsSchema = z.object({
   instagram: z.string().trim().max(300).default(""),
   twitter: z.string().trim().max(300).default(""),
   aboutBody: z.string().trim().max(10000).default(""),
+  aboutImage: z.string().trim().max(2000).default(""),
   footerNote: z.string().trim().max(500).default(""),
   contentIsDemo: z.coerce.boolean().default(false),
 });

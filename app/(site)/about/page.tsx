@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getBusinessSettings, getProcessSteps } from "@/lib/settings";
-import { getPortfolioStats } from "@/lib/data/queries";
+import { getPortfolioStats, getProjectCoverImages } from "@/lib/data/queries";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { ButtonLink } from "@/components/ui/Button";
@@ -17,12 +17,16 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  const [settings, steps, stats] = await Promise.all([
+  const [settings, steps, stats, projectCovers] = await Promise.all([
     getBusinessSettings(),
     getProcessSteps(),
     getPortfolioStats(),
+    getProjectCoverImages(1),
   ]);
   const waLink = whatsappLink(settings.whatsapp, "Hello Official Akogun Furniture, I would like to learn more.");
+  // The admin can upload the workshop photo in Settings; until then, show real
+  // photography from a published project rather than placeholder artwork.
+  const aboutImage = settings.aboutImage || projectCovers[0] || null;
 
   return (
     <div className="pb-24 pt-32">
@@ -52,9 +56,17 @@ export default async function AboutPage() {
           </div>
         </div>
 
-        <div className="relative h-[24rem] overflow-hidden rounded-[var(--radius-card)] border border-ivory/10 sm:h-[32rem]">
-          <Image src="/demo/workshop-1.svg" alt="Illustrated furniture-making scene" fill sizes="50vw" className="object-cover opacity-85" />
-        </div>
+        {aboutImage ? (
+          <div className="relative h-[24rem] overflow-hidden rounded-[var(--radius-card)] border border-ivory/10 sm:h-[32rem]">
+            <Image
+              src={aboutImage}
+              alt="Furniture crafted by Official Akogun Furniture"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover opacity-90"
+            />
+          </div>
+        ) : null}
       </section>
 
       <section className="container-site mt-24" aria-labelledby="process-title">

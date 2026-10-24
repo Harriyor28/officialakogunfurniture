@@ -50,6 +50,12 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
+    // Some shipped placeholder artwork and uploaded logos are SVG. The
+    // optimizer refuses SVG unless this is enabled, which previously left
+    // those images showing as a broken/corrupt icon.
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     // Uploaded images live under /uploads; demo art under /demo.
     localPatterns: [
       { pathname: "/uploads/**" },
