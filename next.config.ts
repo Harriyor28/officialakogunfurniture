@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  experimental: {
+    // Keep Next.js patched against published security advisories.
+    agentUpgrade: "security",
+  },
   serverExternalPackages: ["@prisma/client", "better-sqlite3"],
   async headers() {
     return [
